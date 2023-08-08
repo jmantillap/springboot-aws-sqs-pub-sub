@@ -16,6 +16,7 @@ public class QueueListenerImpl implements AwsListener {
 	
 	private static final Logger LOGGER = LogManager.getLogger(QueueListenerImpl.class);
 
+	
 	@Autowired
 	private RecibirMensajeService recibirMensajeService;
 	
@@ -32,7 +33,8 @@ public class QueueListenerImpl implements AwsListener {
 		} catch (Exception   e) {
 			LOGGER.error("Ocurrió un error al recibir el mensaje {}; id-mensaje: {}, Error: {}", mensaje,mensajeId, e);
 			throw new TechnicalException(e.getMessage(),e);
-		} 	
+		}
+		LOGGER.info("FIN RECIBIR DESDE LA COLA-----------------------------------------------------------------------------");
 		
 	}
 
