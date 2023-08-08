@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.1.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>co.javiermantilla</groupId>
 	<artifactId>aws-sqs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>aws.sqs</name>
-	<description>Proyecto de suscripcion o publicacion a una cola de aws</description>
+	<description>Proyecto de suscripcion o publicacion a una cola de aws
+	</description>
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<aws.sqs.java.extended.client.lib.version>2.0.3
+		</aws.sqs.java.extended.client.lib.version>
+		<aws.sqs.java.messaging.lib.version>2.1.1
+		</aws.sqs.java.messaging.lib.version>
+		<log4j2.version>2.20.0</log4j2.version>
+		<org.slf4j.version>2.0.6</org.slf4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -32,6 +48,52 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency> -->
+		<!-- <dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.10</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.jms</groupId>
+			<artifactId>jakarta.jms-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
+			<version>${aws.sqs.java.messaging.lib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>amazon-sqs-java-extended-client-lib</artifactId>
+			<version>${aws.sqs.java.extended.client.lib.version}</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency> -->
 	</dependencies>
 
 	<build>
@@ -45,6 +107,78 @@
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId><!--$NO-MVN-MAN-VER$ -->
+				<configuration>
+					<source>17</source>
+					<target>17</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.22</version>
+						</path>
+						<dependency>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</dependency>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.4.2.Final</version>
+						</path>
+					</annotationProcessorPaths>
+					<compilerArgs>
+						<compilerArg>
+							-Amapstruct.defaultComponentModel=spring
+						</compilerArg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.5.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.12.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.10</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<!-- <exclude>co/org/ccb/gestorpagos/procesamientopagos/ProcesamientopagosApplication.*
+						</exclude>
+						<exclude>co/org/ccb/gestorpagos/procesamientopagos/dto/*.*
+						</exclude>
+						<exclude>co/org/ccb/gestorpagos/procesamientopagos/exception/*.*
+						</exclude>
+						<exclude>co/org/ccb/gestorpagos/procesamientopagos/util/Constantes.*
+						</exclude> -->
 					</excludes>
 				</configuration>
 			</plugin>

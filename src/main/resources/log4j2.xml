@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss}|%5p|GESTION_PAGOS|PROCESAR PAGOS|%c{1} - %msg %n</Property>
+        <Property name="APP_LOG_ROOT">/tmp</Property>
+    </Properties>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+             <PatternLayout pattern="${LOG_PATTERN}"/>
+	    </Console>
+	    <RollingFile name="appLog"
+                fileName="${APP_LOG_ROOT}/queque-sqs.log"
+                filePattern="${APP_LOG_ROOT}/procesamientopagos-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy max="1" />            
+        </RollingFile>		
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="appLog" />
+		</Root>		
+	</Loggers>
+</Configuration>
