@@ -47,7 +47,7 @@ public class Application {
 
 	@PostConstruct
 	public void init() {
-		try {
+		try {			
 			awsService.suscriber();
 			LOGGER.info("Suscripción a la cola AWS exitosa.");
 		} catch (Exception e) {

@@ -171,14 +171,11 @@
 				</executions>
 				<configuration>
 					<excludes>
-						<!-- <exclude>co/org/ccb/gestorpagos/procesamientopagos/ProcesamientopagosApplication.*
+						<exclude>co/javiermantilla/aws/sqs/Application.*</exclude>
+						<exclude>co/javiermantilla/aws/sqs/dto/*.*</exclude>
+						<exclude>co/javiermantilla/aws/sqs/util/MEntry.*</exclude>
+						<exclude>co/javiermantilla/aws/sqs/queque/impl/AwsConfigQuequeSubImpl.*
 						</exclude>
-						<exclude>co/org/ccb/gestorpagos/procesamientopagos/dto/*.*
-						</exclude>
-						<exclude>co/org/ccb/gestorpagos/procesamientopagos/exception/*.*
-						</exclude>
-						<exclude>co/org/ccb/gestorpagos/procesamientopagos/util/Constantes.*
-						</exclude> -->
 					</excludes>
 				</configuration>
 			</plugin>

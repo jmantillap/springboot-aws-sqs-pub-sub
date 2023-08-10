@@ -46,7 +46,7 @@ public class AwsConfigQuequeSubImpl implements AwsConfigQuequeSub {
 	private String urlCola;
 	@Value("${region.cola}")
 	private String awsRegion;
-
+	
 	@Autowired
 	private ApplicationContext context;
 
@@ -97,7 +97,7 @@ public class AwsConfigQuequeSubImpl implements AwsConfigQuequeSub {
 		}
 	}
 
-	public static SQSConnectionFactory createExtendedSQSConnectionFactory(MEntry connectQueueGetPaid) {
+	private static SQSConnectionFactory createExtendedSQSConnectionFactory(MEntry connectQueueGetPaid) {
 
 		ProviderConfiguration providerConfiguration = new ProviderConfiguration();
 		SqsClient sqsClient = null;

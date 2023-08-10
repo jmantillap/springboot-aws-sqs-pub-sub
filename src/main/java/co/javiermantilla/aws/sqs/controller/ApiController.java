@@ -42,7 +42,7 @@ public class ApiController {
 	@ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ResponseDTO.class)))
 	@ApiResponse(responseCode = "500", description = "ERROR INTERNO", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponseDTO.class)))
 	@PostMapping(value = "send-message", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> realizarLiquidacion(@RequestBody InputMessageRequestDTO data) {
+	public ResponseEntity<Object> enviarMensaje(@RequestBody InputMessageRequestDTO data) {
 		try {
 			LOGGER.info("Se Recibe mensaje api controller: {}", data);
 			return new ResponseEntity<>(this.enviarMensajeService.enviarMensaje(data), HttpStatus.OK);

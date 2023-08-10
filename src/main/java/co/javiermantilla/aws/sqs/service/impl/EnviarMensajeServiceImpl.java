@@ -27,7 +27,7 @@ public class EnviarMensajeServiceImpl implements EnviarMensajeService {
 	private MEntry connectQueueDemo = null;
 
 	@Override
-	public ResponseDTO enviarMensaje(InputMessageRequestDTO data) {
+	public ResponseDTO enviarMensaje(InputMessageRequestDTO data) throws TechnicalException {
 		try {
 			this.verificacionInfoColas();
 			this.sqsServicePush.enviarmensajeColaSQS(data.getMensaje(), connectQueueDemo);

@@ -1,8 +1,10 @@
 package co.javiermantilla.aws.sqs.util;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class MEntry {
 
 	private String accessKey;
@@ -17,4 +19,10 @@ public class MEntry {
 	 * Ambiente ejecutandose la lambda: [0=local; 1 = AWS]
 	 */
 	private String enviromentAWS;
+
+	public MEntry(String url, String region) {
+		this.url = url;
+		this.region = region;
+	}
+
 }
